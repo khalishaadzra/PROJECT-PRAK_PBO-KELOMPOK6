@@ -3,3 +3,5 @@ di buat untuk menyelesaikan project UAS Praktikum Pemrograman Berbasis Objek kel
 
 Tim:
 Khalisha Adzraini Arif (2308107010031)
+Faris Zain As-Shadiq (2308107010039)  
+
