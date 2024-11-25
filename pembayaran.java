@@ -12,6 +12,9 @@ abstract class Pembayaran {
     }
 
     public abstract void prosesPembayaran();
+
+    // Tambahkan metode untuk mendapatkan nama metode pembayaran
+    public abstract String getMetodePembayaran();
 }
 
 // Subkelas Pembayaran
@@ -22,6 +25,12 @@ class QRIS extends Pembayaran {
 
     @Override
     public void prosesPembayaran() {
+        System.out.println("Pembayaran menggunakan QRIS berhasil diproses.");
+    }
+
+    @Override
+    public String getMetodePembayaran() {
+        return "QRIS";
     }
 }
 
@@ -32,6 +41,12 @@ class Bank extends Pembayaran {
 
     @Override
     public void prosesPembayaran() {
+        System.out.println("Pembayaran melalui Bank berhasil diproses.");
+    }
+
+    @Override
+    public String getMetodePembayaran() {
+        return "Bank Transfer";
     }
 }
 
@@ -42,5 +57,11 @@ class COD extends Pembayaran {
 
     @Override
     public void prosesPembayaran() {
+        System.out.println("Pembayaran secara COD berhasil diproses.");
+    }
+
+    @Override
+    public String getMetodePembayaran() {
+        return "Cash on Delivery (COD)";
     }
 }
