@@ -22,6 +22,7 @@ public class AdminMenu {
             System.out.println("4. Tampilkan Daftar Barang");
             System.out.println("5. Terima Transaksi");
             System.out.println("6. Logout");
+            System.out.println("7. Terima Transaksi dari File");
             System.out.print("Pilih menu: ");
             pilihan = scanner.nextInt();
             scanner.nextLine(); // Membersihkan buffer
@@ -45,15 +46,16 @@ public class AdminMenu {
                 case 6:
                     System.out.println("Logout berhasil. Keluar dari sistem.");
                     break;
+                case 7:
+                    admin.terimaTransaksiDariFile();
+                    break;
                 default:
                     System.out.println("Pilihan tidak valid.");
             }
-        } while (pilihan != 6);
+        } while (pilihan != 7);
     }
 
     public void tambahBarang() {
-        List<Barang> listBarang = bacaDariFile(); // Membaca barang yang sudah ada di file
-    
         System.out.print("Masukkan Nama Barang: ");
         String nama = scanner.nextLine();
         System.out.print("Masukkan Harga Barang: ");
@@ -61,21 +63,11 @@ public class AdminMenu {
         System.out.print("Masukkan Stok Barang: ");
         int stok = scanner.nextInt();
         scanner.nextLine(); // Membersihkan buffer
-    
-        // Menambahkan barang baru ke daftar
-        Barang barangBaru = new Barang(nama, harga, stok);
-        listBarang.add(barangBaru);
-    
-        // Simpan daftar barang kembali ke file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("barang.txt"))) {
-            for (Barang barang : listBarang) {
-                writer.write(barang.getNama() + "," + barang.getHarga() + "," + barang.getStok());
-                writer.newLine();
-            }
-            System.out.println("Barang berhasil ditambahkan.");
-        } catch (IOException e) {
-            System.err.println("Error menyimpan daftar barang ke file: " + e.getMessage());
-        }
+
+        Barang barang = new Barang(nama, harga, stok);
+        admin.tambahBarang(barang);
+        simpanKeFile(); // Simpan perubahan ke file
+        System.out.println("Barang berhasil ditambahkan.");
     }
 
     public void hapusBarang() {
