@@ -52,6 +52,8 @@ public class AdminMenu {
     }
 
     public void tambahBarang() {
+        List<Barang> listBarang = bacaDariFile(); // Membaca barang yang sudah ada di file
+    
         System.out.print("Masukkan Nama Barang: ");
         String nama = scanner.nextLine();
         System.out.print("Masukkan Harga Barang: ");
@@ -59,11 +61,21 @@ public class AdminMenu {
         System.out.print("Masukkan Stok Barang: ");
         int stok = scanner.nextInt();
         scanner.nextLine(); // Membersihkan buffer
-
-        Barang barang = new Barang(nama, harga, stok);
-        admin.tambahBarang(barang);
-        simpanKeFile(); // Simpan perubahan ke file
-        System.out.println("Barang berhasil ditambahkan.");
+    
+        // Menambahkan barang baru ke daftar
+        Barang barangBaru = new Barang(nama, harga, stok);
+        listBarang.add(barangBaru);
+    
+        // Simpan daftar barang kembali ke file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("barang.txt"))) {
+            for (Barang barang : listBarang) {
+                writer.write(barang.getNama() + "," + barang.getHarga() + "," + barang.getStok());
+                writer.newLine();
+            }
+            System.out.println("Barang berhasil ditambahkan.");
+        } catch (IOException e) {
+            System.err.println("Error menyimpan daftar barang ke file: " + e.getMessage());
+        }
     }
 
     public void hapusBarang() {
