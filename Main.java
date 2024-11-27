@@ -68,5 +68,26 @@ public class Main {
             System.out.println("Gagal membaca data customer: " + e.getMessage());
         }
     }
+    private static void saveData() {
+        // Simpan data admin ke file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ADMIN_FILE))) {
+            for (Admin admin : adminList) {
+                writer.write(admin.getId() + "," + admin.getPassword());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Gagal menyimpan data admin: " + e.getMessage());
+        }
+
+        // Simpan data customer ke file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(CUSTOMER_FILE))) {
+            for (Customer customer : customerList) {
+                writer.write(customer.getId() + "," + customer.getPassword());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Gagal menyimpan data customer: " + e.getMessage());
+        }
+    }
 
 }
