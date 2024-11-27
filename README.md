@@ -8,3 +8,5 @@ Khalisha Adzraini Arif (2308107010031)
 Faris Zain As-Shadiq (2308107010039)  
 
 Nadia Maghdalena (2308107010045)
+
+Link Git: https://github.com/khalishaadzra/PROJECT-PRAK_PBO-KELOMPOK6.git
