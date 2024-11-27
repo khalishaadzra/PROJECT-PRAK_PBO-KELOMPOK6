@@ -10,6 +10,7 @@ class Invoice {
         this.transaksi = transaksi;
         this.pembayaran = pembayaran;
     }
+
     private String formatHeader() {
         return "============= INVOICE =============\n";
     }
@@ -25,7 +26,7 @@ class Invoice {
         }
         return String.format("Total Harga   : Rp %.2f\n", totalHarga);
     }
-    
+
     public void cetakInvoice() {
         StringBuilder sb = new StringBuilder();
 
@@ -43,5 +44,27 @@ class Invoice {
         sb.append(formatFooter());
 
         System.out.println(sb);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(formatHeader());
+        sb.append("Customer ID   : ").append(transaksi.getCustomer().getId()).append("\n");
+        sb.append("Daftar Barang :\n");
+        for (Barang barang : transaksi.getBarang()) {
+            double totalBarang = barang.getHarga() * barang.getStok(); // Harga x Jumlah Barang
+            sb.append(" ").append(barang.getNama()).append(": Rp ")
+              .append(String.format("%.2f", barang.getHarga())).append(" x ")
+              .append(barang.getStok()).append(" = Rp ")
+              .append(String.format("%.2f", totalBarang)).append("\n");
+        }
+        sb.append("---------------------------\n");
+        sb.append(formatTotalHarga(transaksi.getBarang()));
+        sb.append("Metode Bayar  : ").append(pembayaran.getMetodePembayaran()).append("\n");
+        sb.append(formatFooter());
+
+        return sb.toString();
     }
 }
