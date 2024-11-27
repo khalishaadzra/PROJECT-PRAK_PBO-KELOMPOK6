@@ -108,4 +108,37 @@ public class AdminDriver extends Driver {
             System.out.println("\nBarang tidak ditemukan.");
         }
     }
+
+        public void editBarang() {
+        List<Barang> listBarang = bacaDariFile(); // Baca daftar barang dari file
+        System.out.print("Masukkan Nama Barang yang akan diedit: ");
+        String nama = scanner.nextLine();
+    
+        boolean barangDiedit = false;
+        for (Barang barang : listBarang) {
+            if (barang.getNama().equalsIgnoreCase(nama)) {
+                System.out.print("Masukkan Nama Baru Barang: ");
+                String namaBaru = scanner.nextLine();
+                System.out.print("Masukkan Harga Baru Barang: ");
+                double hargaBaru = scanner.nextDouble();
+                System.out.print("Masukkan Stok Baru Barang: ");
+                int stokBaru = scanner.nextInt();
+                scanner.nextLine(); // Membersihkan buffer
+    
+                // Update data barang
+                barang.setNama(namaBaru);
+                barang.setHarga(hargaBaru);
+                barang.setStok(stokBaru);
+                barangDiedit = true;
+                break;
+            }
+        }
+    
+        if (barangDiedit) {
+            simpanKeFile(listBarang); // Simpan daftar barang yang diperbarui ke file
+            System.out.println("\nBarang berhasil diedit.");
+        } else {
+            System.out.println("\nBarang tidak ditemukan.");
+        }
+    }
 }
