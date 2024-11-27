@@ -3,21 +3,26 @@ package models;
 import java.io.*;
 import java.util.*;
 
+
+// Menginisialisasi class CustomerDriver yang meng-extends class Driver
 public class CustomerDriver extends Driver {
     private Customer customer;
     private Scanner scanner;
 
+    // Konstruktor untuk inisialisasi objek CustomerDriver dengan customer dan scanner
     public CustomerDriver(Customer customer, Scanner scanner) {
         super(customer.getAkun());
         this.customer = customer;
         this.scanner = scanner;
     }
 
+    // Override metode menu dari kelas Driver untuk menampilkan menu customer
     @Override
     public void menu() {
         menuCustomer();
     }
 
+    // Menampilkan menu pilihan untuk customer
     public void menuCustomer() {
         int pilihan;
         do {
@@ -58,6 +63,7 @@ public class CustomerDriver extends Driver {
         } while (pilihan != 6);
     }
 
+    // Menampilkan daftar barang yang tersedia di toko
     public void lihatDaftarBarang() {
         File file = new File("barang.txt");
         if (!file.exists()) {
@@ -79,6 +85,8 @@ public class CustomerDriver extends Driver {
             System.out.println("Terjadi kesalahan saat membaca file: " + e.getMessage());
         }
     }
+
+    // Menambahkan barang ke keranjang belanja
     public void tambahKeKeranjang() {
         System.out.print("Masukkan Nama Barang: ");
         String namaBarang = scanner.nextLine();
@@ -96,7 +104,7 @@ public class CustomerDriver extends Driver {
         try {
             List<Barang> barangList = new ArrayList<>();
             boolean barangDitemukan = false;
-    
+
             // Membaca file barang dan memperbarui stok
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                 String line;
@@ -108,10 +116,10 @@ public class CustomerDriver extends Driver {
     
                     if (nama.equalsIgnoreCase(namaBarang)) {
                         if (stok >= jumlahBarang) {
-                            stok -= jumlahBarang; // Kurangi stok sesuai jumlah yang diminta
-                            Barang barang = new Barang(nama, harga, jumlahBarang); // Tambah barang ke keranjang
+                            stok -= jumlahBarang;
+                            Barang barang = new Barang(nama, harga, jumlahBarang);
                             customer.getKeranjang().tambahBarang(barang);
-                            simpanKeranjang(barang); // Simpan ke file keranjang.txt
+                            simpanKeranjang(barang);
                             System.out.println("\nBarang berhasil ditambahkan ke keranjang.");
                             barangDitemukan = true;
                         } else {
@@ -137,7 +145,8 @@ public class CustomerDriver extends Driver {
             System.out.println("\nTerjadi kesalahan saat membaca atau menulis file: " + e.getMessage());
         }
     }
-    
+
+    // Menyimpan barang yang ditambahkan ke keranjang ke dalam file keranjang.txt
     private void simpanKeranjang(Barang barang) {
         File file = new File("keranjang.txt");
     
@@ -149,7 +158,7 @@ public class CustomerDriver extends Driver {
         }
     }
     
-
+    // Menampilkan barang yang ada dalam keranjang belanja
     public void lihatKeranjang() {
         File file = new File("keranjang.txt");
     
@@ -173,7 +182,8 @@ public class CustomerDriver extends Driver {
             System.out.println("Terjadi kesalahan saat membaca file keranjang.txt: " + e.getMessage());
         }
     }
-    
+
+    // Proses checkout dan memilih metode pembayaran
     public void checkout() {
         Admin adminMenu = new Admin("admin123", "password123");
         System.out.println("\nPilih Metode Pembayaran:");
@@ -220,7 +230,7 @@ public class CustomerDriver extends Driver {
         }
     }
     
-
+    // Menampilkan riwayat belanja customer, baik barang yang belum diterima maupun yang sudah diterima
     public void lihatRiwayatBelanja() {
             System.out.println("\n============== RIWAYAT BELANJA ==============\n");
             
@@ -234,12 +244,12 @@ public class CustomerDriver extends Driver {
                 boolean isCustomer = false;
                 
                 while ((line = reader.readLine()) != null) {
-                    if (line.startsWith("cust")) { // ID customer
+                    if (line.startsWith("cust")) {
                         currentCustomer = line;
                         isCustomer = true;
                         System.out.println("ID Customer: " + currentCustomer);
                         System.out.println("Daftar Barang:");
-                    } else if (!line.equals("---")) { // Item details
+                    } else if (!line.equals("---")) {
                         String[] parts = line.split(",");
                         if (parts.length == 3) {
                             String namaBarang = parts[0];
@@ -247,9 +257,9 @@ public class CustomerDriver extends Driver {
                             int jumlah = Integer.parseInt(parts[2]);
                             System.out.printf("  - %s : %.1f (%d pcs)%n", namaBarang, harga, jumlah);
                         }
-                    } else { // Separator for next customer
+                    } else { 
                         if (isCustomer) {
-                            System.out.println(); // Add space between customer records
+                            System.out.println();
                         }
                         isCustomer = false;
                     }
@@ -281,13 +291,13 @@ public class CustomerDriver extends Driver {
                 while ((line = reader.readLine()) != null) {
                     if (!line.equals("---")) {
                         if (currentCustomerID == null) {
-                            currentCustomerID = line; // Baris pertama dianggap sebagai Customer ID
+                            currentCustomerID = line;
                             transaksiMap.putIfAbsent(currentCustomerID, new ArrayList<>());
                         } else {
-                            transaksiMap.get(currentCustomerID).add(line); // Tambahkan barang ke Customer ID
+                            transaksiMap.get(currentCustomerID).add(line);
                         }
                     } else {
-                        currentCustomerID = null; // Reset setelah menemukan "---"
+                        currentCustomerID = null; 
                     }
                 }
             } catch (IOException e) {
