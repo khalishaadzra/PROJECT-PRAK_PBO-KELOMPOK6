@@ -25,5 +25,23 @@ class Invoice {
         }
         return String.format("Total Harga   : Rp %.2f\n", totalHarga);
     }
+    
+    public void cetakInvoice() {
+        StringBuilder sb = new StringBuilder();
 
+        sb.append(formatHeader());
+        sb.append("Customer ID   : ").append(transaksi.getCustomer().getId()).append("\n");
+        sb.append("Daftar Barang : ");
+        for (Barang barang : transaksi.getBarang()) {
+            sb.append(" ").append(barang.getNama()).append(": Rp ")
+              .append(String.format("%.2f", barang.getHarga())).append("\n");
+        }
+        sb.append("---------------------------------\n");
+        sb.append(formatTotalHarga(transaksi.getBarang()));
+        sb.append("Metode Bayar  : ").append(pembayaran.getMetodePembayaran()).append("\n");
+        sb.append("Pembayaran berhasil diproses.\n");
+        sb.append(formatFooter());
+
+        System.out.println(sb);
+    }
 }
