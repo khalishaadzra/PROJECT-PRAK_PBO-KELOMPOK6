@@ -65,5 +65,12 @@ public class Customer extends Akun {
     public List<Invoice> getHistoryBelanja() {
         return invoiceSelesai;
     }
-
+    
+    // Menambah barang ke keranjang
+    public boolean tambahBarangKeKeranjang(String namaBarang, double harga, int jumlah) {
+        Barang barang = new Barang(namaBarang, harga, jumlah);
+        keranjang.tambahBarang(barang);
+        return true; // Menunjukkan barang berhasil ditambahkan
+    }
+    
 }
