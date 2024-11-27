@@ -22,17 +22,18 @@ public class Admin extends Akun {
         return akun;
     }
 
-    // Menambahkan barang ke dalam daftar barang
+    // Method untuk menambahkan barang baru ke dalam daftar barang (listBarang)
     public void tambahBarang(Barang barang) {
         listBarang.add(barang);
     }
 
-    // Menghapus barang dari daftar berdasarkan nama barang
+    // Method untuk menghapus barang dari daftar berdasarkan nama barang
     public void hapusBarang(String namaBarang) {
         listBarang.removeIf(barang -> barang.getNama().equalsIgnoreCase(namaBarang));
     }
 
-    // Mengedit detail barang berdasarkan nama barang lama
+    // Method untuk mengedit detail barang berdasarkan nama barang lama,
+    // seperti mengganti nama, harga, dan stok barang
     public void editBarang(String namaBarang, String namaBaru, double hargaBaru, int stokBaru) {
         for (Barang barang : listBarang) {
             if (barang.getNama().equalsIgnoreCase(namaBarang)) {
@@ -53,7 +54,7 @@ public class Admin extends Akun {
         return listBarang;
     }
 
-    // Menyimpan daftar barang ke dalam file
+    // Method untuk menyimpan daftar barang ke dalam file dengan format tertentu
     public void simpanBarangKeFile(String namaFile) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(namaFile))) {
             for (Barang barang : listBarang) {
@@ -66,7 +67,8 @@ public class Admin extends Akun {
         }
     }   
 
-    // Memuat transaksi dari file "transaksi.txt" dan memproses transaksi berdasarkan input admin
+    // Method untuk menerima dan memproses transaksi dari file "transaksi.txt"
+    // Memproses setiap transaksi dengan membaca data transaksi dari file dan menambahkannya ke daftar transaksi baru
     public void terimaTransaksiDariFile() {
         List<Transaksi> transaksiBaru = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader("transaksi.txt"))) {
@@ -111,7 +113,7 @@ public class Admin extends Akun {
             return;
         }
     
-        // Menampilkan daftar transaksi yang tersedia
+        // Menampilkan daftar transaksi yang tersedia untuk diproses oleh admin
         System.out.println("\nDaftar Transaksi yang Tersedia:");
         int index = 1;
         for (Transaksi transaksi : transaksiBaru) {
@@ -122,7 +124,7 @@ public class Admin extends Akun {
             index++;
         }
     
-        // Meminta admin memilih transaksi untuk diproses
+        // Meminta admin memilih transaksi yang akan diproses
         Scanner scanner = new Scanner(System.in);
         System.out.print("Pilih nomor transaksi untuk diproses: ");
         int pilihan = scanner.nextInt();
@@ -136,7 +138,7 @@ public class Admin extends Akun {
         Transaksi transaksiDipilih = transaksiBaru.get(pilihan - 1);
         System.out.println("\nMemproses transaksi untuk Customer: " + transaksiDipilih.getCustomer().getId());
     
-        // Memindahkan transaksi yang dipilih ke file transaksi_diterima.txt
+        // Memindahkan transaksi yang diproses ke file "transaksi_diterima.txt"
         pindahkanKeFileDiproses(transaksiDipilih);
     
         // Menghapus transaksi yang sudah diproses dari daftar transaksi baru
@@ -146,7 +148,7 @@ public class Admin extends Akun {
         simpanTransaksiKeFile(transaksiBaru);
     }
     
-    // Memindahkan transaksi yang telah diproses ke file "transaksi_diterima.txt"
+    // Method untuk memindahkan transaksi yang sudah diproses ke dalam file "transaksi_diterima.txt"
     private void pindahkanKeFileDiproses(Transaksi transaksi) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("transaksi_diterima.txt", true))) {
             writer.write("Customer ID: " + transaksi.getCustomer().getId());
@@ -162,7 +164,7 @@ public class Admin extends Akun {
         }
     }
 
-    // Menyimpan daftar transaksi yang belum diproses kembali ke file "transaksi.txt"
+    // Method untuk menyimpan transaksi yang belum diproses kembali ke dalam file "transaksi.txt"
     private void simpanTransaksiKeFile(List<Transaksi> transaksiBaru) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("transaksi.txt"))) {
             for (Transaksi transaksi : transaksiBaru) {
