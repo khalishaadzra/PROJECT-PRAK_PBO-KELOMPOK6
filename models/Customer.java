@@ -75,4 +75,22 @@ public class Customer extends Akun {
         return true; // Menunjukkan barang berhasil ditambahkan
     }
 
+    
+    // Melihat daftar barang dari file
+    public List<Barang> lihatDaftarBarang(String namaFile) {
+        List<Barang> daftarBarang = new ArrayList<>();
+        try (var reader = new java.io.BufferedReader(new java.io.FileReader(namaFile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                String nama = data[0];
+                double harga = Double.parseDouble(data[1]);
+                int stok = Integer.parseInt(data[2]);
+                daftarBarang.add(new Barang(nama, harga, stok));
+            }
+        } catch (Exception e) {
+            System.out.println("Terjadi kesalahan saat membaca daftar barang: " + e.getMessage());
+        }
+        return daftarBarang;
+    }
 }
