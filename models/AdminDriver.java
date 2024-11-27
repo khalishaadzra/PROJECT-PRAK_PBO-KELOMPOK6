@@ -18,6 +18,7 @@ public class AdminDriver extends Driver {
         menuAdmin();
     }
 
+    // Menampilkan menu untuk admin dan menangani pilihan menu
     public void menuAdmin() {
         int pilihan;
         do {
@@ -58,46 +59,48 @@ public class AdminDriver extends Driver {
         } while (pilihan != 6);
     }
 
+    // Menambahkan barang baru ke dalam daftar dan menyimpannya ke file
     public void tambahBarang() {
-    List<Barang> listBarang = bacaDariFile(); // Membaca barang yang sudah ada di file
+        List<Barang> listBarang = bacaDariFile(); // Membaca barang yang sudah ada di file
     
-    System.out.print("Masukkan Nama Barang: ");
-    String nama = scanner.nextLine();
-    System.out.print("Masukkan Harga Barang: ");
-    double harga = scanner.nextDouble();
-    System.out.print("Masukkan Stok Barang: ");
-    int stok = scanner.nextInt();
-    scanner.nextLine(); // Membersihkan buffer
+        System.out.print("Masukkan Nama Barang: ");
+        String nama = scanner.nextLine();
+        System.out.print("Masukkan Harga Barang: ");
+        double harga = scanner.nextDouble();
+        System.out.print("Masukkan Stok Barang: ");
+        int stok = scanner.nextInt();
+        scanner.nextLine(); // Membersihkan buffer
     
-    // Menambahkan barang baru ke daftar
-    Barang barangBaru = new Barang(nama, harga, stok);
-    listBarang.add(barangBaru);
+        // Menambahkan barang baru ke daftar
+        Barang barangBaru = new Barang(nama, harga, stok);
+        listBarang.add(barangBaru);
     
-    // Simpan daftar barang kembali ke file
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter("barang.txt"))) {
-        for (Barang barang : listBarang) {
-            writer.write(barang.getNama() + "," + barang.getHarga() + "," + barang.getStok());
-            writer.newLine();
-        }
-        System.out.println("\nBarang berhasil ditambahkan.");
-    } catch (IOException e) {
-        System.err.println("\nError menyimpan daftar barang ke file: " + e.getMessage());
+        // Simpan daftar barang kembali ke file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("barang.txt"))) {
+            for (Barang barang : listBarang) {
+                writer.write(barang.getNama() + "," + barang.getHarga() + "," + barang.getStok());
+                writer.newLine();
+            }
+            System.out.println("\nBarang berhasil ditambahkan.");
+        } catch (IOException e) {
+            System.err.println("\nError menyimpan daftar barang ke file: " + e.getMessage());
         }
     }
 
+    // Menghapus barang berdasarkan nama dari daftar dan memperbarui file
     public void hapusBarang() {
-    List<Barang> listBarang = bacaDariFile(); // Baca daftar barang dari file
-    System.out.print("Masukkan Nama Barang yang akan dihapus: ");
-    String nama = scanner.nextLine();
+        List<Barang> listBarang = bacaDariFile(); // Baca daftar barang dari file
+        System.out.print("Masukkan Nama Barang yang akan dihapus: ");
+        String nama = scanner.nextLine();
     
-    boolean barangDihapus = false;
-    Iterator<Barang> iterator = listBarang.iterator();
-    while (iterator.hasNext()) {
-    Barang barang = iterator.next();
-        if (barang.getNama().equalsIgnoreCase(nama)) {
-            iterator.remove(); // Hapus barang dari daftar
-            barangDihapus = true;
-            break;
+        boolean barangDihapus = false;
+        Iterator<Barang> iterator = listBarang.iterator();
+        while (iterator.hasNext()) {
+            Barang barang = iterator.next();
+            if (barang.getNama().equalsIgnoreCase(nama)) {
+                iterator.remove(); // Hapus barang dari daftar
+                barangDihapus = true;
+                break;
             }
         }
     
@@ -109,39 +112,41 @@ public class AdminDriver extends Driver {
         }
     }
 
+    // Mengedit data barang berdasarkan nama dan memperbarui file
     public void editBarang() {
-    List<Barang> listBarang = bacaDariFile(); // Baca daftar barang dari file
-    System.out.print("Masukkan Nama Barang yang akan diedit: ");
-    String nama = scanner.nextLine();
+        List<Barang> listBarang = bacaDariFile(); // Baca daftar barang dari file
+        System.out.print("Masukkan Nama Barang yang akan diedit: ");
+        String nama = scanner.nextLine();
     
-    boolean barangDiedit = false;
-    for (Barang barang : listBarang) {
-        if (barang.getNama().equalsIgnoreCase(nama)) {
-            System.out.print("Masukkan Nama Baru Barang: ");
-            String namaBaru = scanner.nextLine();
-            System.out.print("Masukkan Harga Baru Barang: ");
-            double hargaBaru = scanner.nextDouble();
-            System.out.print("Masukkan Stok Baru Barang: ");
-            int stokBaru = scanner.nextInt();
-            scanner.nextLine(); // Membersihkan buffer
+        boolean barangDiedit = false;
+        for (Barang barang : listBarang) {
+            if (barang.getNama().equalsIgnoreCase(nama)) {
+                System.out.print("Masukkan Nama Baru Barang: ");
+                String namaBaru = scanner.nextLine();
+                System.out.print("Masukkan Harga Baru Barang: ");
+                double hargaBaru = scanner.nextDouble();
+                System.out.print("Masukkan Stok Baru Barang: ");
+                int stokBaru = scanner.nextInt();
+                scanner.nextLine(); // Membersihkan buffer
     
-    // Update data barang
-    barang.setNama(namaBaru);
-    barang.setHarga(hargaBaru);
-    barang.setStok(stokBaru);
-    barangDiedit = true;
-        break;
+                // Update data barang
+                barang.setNama(namaBaru);
+                barang.setHarga(hargaBaru);
+                barang.setStok(stokBaru);
+                barangDiedit = true;
+                break;
+            }
         }
-    }
     
-    if (barangDiedit) {
-        simpanKeFile(listBarang); // Simpan daftar barang yang diperbarui ke file
-        System.out.println("\nBarang berhasil diedit.");
-    } else {
-        System.out.println("\nBarang tidak ditemukan.");
+        if (barangDiedit) {
+            simpanKeFile(listBarang); // Simpan daftar barang yang diperbarui ke file
+            System.out.println("\nBarang berhasil diedit.");
+        } else {
+            System.out.println("\nBarang tidak ditemukan.");
         }
     }
 
+    // Menyimpan daftar barang yang diperbarui ke file
     private void simpanKeFile(List<Barang> listBarang) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("barang.txt"))) {
             for (Barang barang : listBarang) {
@@ -152,42 +157,48 @@ public class AdminDriver extends Driver {
             System.err.println("Error menyimpan daftar barang ke file: " + e.getMessage());
         }
     }
+
+    // Menampilkan daftar barang yang ada dalam file
     public void tampilkanBarang() {
-    System.out.println("Daftar Barang:");
-    List<Barang> listBarang = bacaDariFile();
+        System.out.println("Daftar Barang:");
+        List<Barang> listBarang = bacaDariFile();
         if (listBarang.isEmpty()) {
-        System.out.println("Tidak ada barang yang tersedia.");
+            System.out.println("Tidak ada barang yang tersedia.");
         } else {
             for (Barang barang : listBarang) {
                 System.out.println("-> " + barang.getNama() + ": Rp " + barang.getHarga() + " (Stok: " + barang.getStok() + ")");
             }
         }
     }
+
+    // Menampilkan daftar transaksi yang diterima
     public void terimaTransaksi() {
-    System.out.println("\nDaftar Transaksi yang diterima:");
+        System.out.println("\nDaftar Transaksi yang diterima:");
         if (admin.getListTransaksi().isEmpty()) {
-        System.out.println("- Belum ada transaksi yang diterima.");
-        return;
-    }
-        
-    for (Transaksi transaksi : admin.getListTransaksi()) {
-    System.out.println(transaksi);
-    }
-}
-    private List<Barang> bacaDariFile() {
-    List<Barang> listBarang = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("barang.txt"))) {
-        String line;
-    while ((line = reader.readLine()) != null) {
-    String[] data = line.split(",");
-    String nama = data[0];
-    double harga = Double.parseDouble(data[1]);
-    int stok = Integer.parseInt(data[2]);
-    listBarang.add(new Barang(nama, harga, stok));
+            System.out.println("- Belum ada transaksi yang diterima.");
+            return;
         }
-    } catch (IOException e) {
-    System.err.println("Error membaca daftar barang dari file: " + e.getMessage());
+    
+        for (Transaksi transaksi : admin.getListTransaksi()) {
+            System.out.println(transaksi);
+        }
     }
-    return listBarang;
+
+    // Membaca daftar barang dari file
+    private List<Barang> bacaDariFile() {
+        List<Barang> listBarang = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader("barang.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                String nama = data[0];
+                double harga = Double.parseDouble(data[1]);
+                int stok = Integer.parseInt(data[2]);
+                listBarang.add(new Barang(nama, harga, stok));
+            }
+        } catch (IOException e) {
+            System.err.println("Error membaca daftar barang dari file: " + e.getMessage());
+        }
+        return listBarang;
     }
 }
