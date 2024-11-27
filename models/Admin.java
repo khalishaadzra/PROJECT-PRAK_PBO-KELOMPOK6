@@ -142,5 +142,18 @@ public class Admin extends Akun {
         // Simpan transaksi yang belum diproses kembali ke file transaksi.txt
         simpanTransaksiKeFile(transaksiBaru);
     }
-    
+    private void pindahkanKeFileDiproses(Transaksi transaksi) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("transaksi_diterima.txt", true))) {
+            writer.write("Customer ID: " + transaksi.getCustomer().getId());
+            writer.newLine();
+            for (Barang barang : transaksi.getBarang()) {
+                writer.write(barang.getNama() + "," + barang.getHarga() + "," + barang.getStok());
+                writer.newLine();
+            }
+            writer.write("---");
+            writer.newLine();
+        } catch (IOException e) {
+            System.err.println("Kesalahan menulis ke file transaksi_diterima.txt: " + e.getMessage());
+        }
+    }
 }
