@@ -57,4 +57,17 @@ public class AdminDriver extends Driver {
             }
         } while (pilihan != 6);
     }
+
+        public void tambahBarang() {
+        List<Barang> listBarang = bacaDariFile(); // Membaca barang yang sudah ada di file
+    
+        System.out.print("Masukkan Nama Barang: ");
+        String nama = scanner.nextLine();
+        System.out.print("Masukkan Harga Barang: ");
+        double harga = scanner.nextDouble();
+        System.out.print("Masukkan Stok Barang: ");
+        int stok = scanner.nextInt();
+        scanner.nextLine(); // Membersihkan buffer
+    
+        // Menambahkan barang baru ke daftar
 }
