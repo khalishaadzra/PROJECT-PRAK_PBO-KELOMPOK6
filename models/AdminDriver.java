@@ -7,18 +7,20 @@ public class AdminDriver extends Driver {
     private Admin admin;
     private Scanner scanner;
 
+    // Konstruktor untuk inisialisasi Admin dan Scanner
     public AdminDriver(Admin admin, Scanner scanner) {
         super(admin.getAkun());
         this.admin = admin;
         this.scanner = scanner;
     }
     
+    // Menampilkan menu untuk admin dan menangani pilihan menu
     @Override
     public void menu() {
-        menuAdmin();
+        menuAdmin(); 
     }
 
-    // Menampilkan menu untuk admin dan menangani pilihan menu
+    // Menampilkan menu admin dan memproses pilihan menu yang dimasukkan admin
     public void menuAdmin() {
         int pilihan;
         do {
@@ -33,6 +35,7 @@ public class AdminDriver extends Driver {
             System.out.print("Pilih menu: ");
             pilihan = scanner.nextInt();
             scanner.nextLine(); // Membersihkan buffer
+
 
             switch (pilihan) {
                 case 1:
@@ -59,9 +62,9 @@ public class AdminDriver extends Driver {
         } while (pilihan != 6);
     }
 
-    // Menambahkan barang baru ke dalam daftar dan menyimpannya ke file
+    // Menambahkan barang baru ke dalam daftar barang dan menyimpannya ke file
     public void tambahBarang() {
-        List<Barang> listBarang = bacaDariFile(); // Membaca barang yang sudah ada di file
+        List<Barang> listBarang = bacaDariFile(); 
     
         System.out.print("Masukkan Nama Barang: ");
         String nama = scanner.nextLine();
@@ -89,7 +92,7 @@ public class AdminDriver extends Driver {
 
     // Menghapus barang berdasarkan nama dari daftar dan memperbarui file
     public void hapusBarang() {
-        List<Barang> listBarang = bacaDariFile(); // Baca daftar barang dari file
+        List<Barang> listBarang = bacaDariFile(); 
         System.out.print("Masukkan Nama Barang yang akan dihapus: ");
         String nama = scanner.nextLine();
     
@@ -105,7 +108,7 @@ public class AdminDriver extends Driver {
         }
     
         if (barangDihapus) {
-            simpanKeFile(listBarang); // Simpan daftar barang yang diperbarui ke file
+            simpanKeFile(listBarang);
             System.out.println("\nBarang berhasil dihapus.");
         } else {
             System.out.println("\nBarang tidak ditemukan.");
@@ -114,7 +117,7 @@ public class AdminDriver extends Driver {
 
     // Mengedit data barang berdasarkan nama dan memperbarui file
     public void editBarang() {
-        List<Barang> listBarang = bacaDariFile(); // Baca daftar barang dari file
+        List<Barang> listBarang = bacaDariFile(); 
         System.out.print("Masukkan Nama Barang yang akan diedit: ");
         String nama = scanner.nextLine();
     
@@ -139,7 +142,7 @@ public class AdminDriver extends Driver {
         }
     
         if (barangDiedit) {
-            simpanKeFile(listBarang); // Simpan daftar barang yang diperbarui ke file
+            simpanKeFile(listBarang); 
             System.out.println("\nBarang berhasil diedit.");
         } else {
             System.out.println("\nBarang tidak ditemukan.");
