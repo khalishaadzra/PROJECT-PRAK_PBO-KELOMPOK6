@@ -28,5 +28,15 @@ public class Admin extends Akun {
     public void hapusBarang(String namaBarang) {
         listBarang.removeIf(barang -> barang.getNama().equalsIgnoreCase(namaBarang));
     }
-
+    public void editBarang(String namaBarang, String namaBaru, double hargaBaru, int stokBaru) {
+        for (Barang barang : listBarang) {
+            if (barang.getNama().equalsIgnoreCase(namaBarang)) {
+                barang.setNama(namaBaru);
+                barang.setHarga(hargaBaru);
+                barang.setStok(stokBaru);
+                System.out.println("\nBarang berhasil diperbarui.");
+                return;
+            }
+        }
+    }
 }
