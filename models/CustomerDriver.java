@@ -97,7 +97,32 @@ public class CustomerDriver extends Driver {
         try {
             List<Barang> barangList = new ArrayList<>();
             boolean barangDitemukan = false;
+
+                    // Membaca file barang dan memperbarui stok
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] data = line.split(",");
+                    String nama = data[0];
+                    double harga = Double.parseDouble(data[1]);
+                    int stok = Integer.parseInt(data[2]);
     
+                    if (nama.equalsIgnoreCase(namaBarang)) {
+                        if (stok >= jumlahBarang) {
+                            stok -= jumlahBarang; // Kurangi stok sesuai jumlah yang diminta
+                            Barang barang = new Barang(nama, harga, jumlahBarang); // Tambah barang ke keranjang
+                            customer.getKeranjang().tambahBarang(barang);
+                            simpanKeranjang(barang); // Simpan ke file keranjang.txt
+                            System.out.println("\nBarang berhasil ditambahkan ke keranjang.");
+                            barangDitemukan = true;
+                        } else {
+                            System.out.println("\nStok tidak mencukupi. Tersedia hanya " + stok + " barang.");
+                        }
+                    }
+                    barangList.add(new Barang(nama, harga, stok)); // Simpan barang dengan stok yang diperbarui
+                }
+            }
+            
             // Simpan kembali file barang dengan stok yang diperbarui
             if (barangDitemukan) {
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
