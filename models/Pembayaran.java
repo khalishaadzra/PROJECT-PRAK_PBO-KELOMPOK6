@@ -49,3 +49,19 @@ class Bank extends Pembayaran {
         return "Bank Transfer";
     }
 }
+
+class COD extends Pembayaran {
+    public COD(String id) {
+        super(id);
+    }
+
+    @Override
+    public void prosesPembayaran() {
+        System.out.println("Pembayaran secara COD berhasil diproses.");
+    }
+
+    @Override
+    public String getMetodePembayaran() {
+        return "Cash on Delivery (COD)";
+    }
+}
