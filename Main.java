@@ -1,4 +1,3 @@
-
 import models.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -11,8 +10,8 @@ public class Main {
     private static List<Customer> customerList = new ArrayList<>();
     private static final String ADMIN_FILE = "admin_data.txt";
     private static final String CUSTOMER_FILE = "customer_data.txt";
+
     public static void main(String[] args) {
-        
         loadData(); // Baca data dari file saat program dimulai
         int pilihan;
         do {
@@ -41,10 +40,10 @@ public class Main {
                     break;
                 default:
                     System.out.println("\nPilihan tidak valid. Silakan coba lagi.");
-                }
-            } while (pilihan != 4);
-        }
-    
+            }
+        } while (pilihan != 4);
+    }
+
     private static void loadData() {
         // Baca data admin dari file
         try (BufferedReader reader = new BufferedReader(new FileReader(ADMIN_FILE))) {
@@ -68,6 +67,7 @@ public class Main {
             System.out.println("Gagal membaca data customer: " + e.getMessage());
         }
     }
+
     private static void saveData() {
         // Simpan data admin ke file
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ADMIN_FILE))) {
@@ -89,7 +89,9 @@ public class Main {
             System.out.println("Gagal menyimpan data customer: " + e.getMessage());
         }
     }
+
     public static void signUp() {
+        
         System.out.println("\n================== SIGN IN =================\n");
         System.out.print("Pilih jenis akun (1: Admin, 2: Customer): ");
         int jenisAkun = scanner.nextInt();
@@ -112,7 +114,9 @@ public class Main {
             System.out.println("\nPilihan tidak valid.");
         }
     }
+
     public static void loginAdmin() {
+        
         System.out.println("\n================ LOGIN ADMIN ================\n");
         System.out.print("Masukkan ID: ");
         String id = scanner.nextLine();
@@ -130,6 +134,28 @@ public class Main {
             adminMenu.menuAdmin();
         } else {
             System.out.println("\nID atau Password salah. Silakan coba lagi.\n");
+        }
+    }
+
+    public static void loginCustomer() {
+        
+        System.out.println("\n============== LOGIN CUSTOMER ==============\n");
+        System.out.print("Masukkan ID: ");
+        String id = scanner.nextLine();
+        System.out.print("Masukkan Password: ");
+        String password = scanner.nextLine();
+
+        Customer customer = customerList.stream()
+                .filter(c -> c.getId().equals(id) && c.getPassword().equals(password))
+                .findFirst()
+                .orElse(null);
+
+        if (customer != null) {
+            System.out.println("\nLogin berhasil sebagai Customer.\n");
+            CustomerDriver customerMenu = new CustomerDriver(customer, scanner);
+            customerMenu.menuCustomer();
+        } else {
+            System.out.println("ID atau Password salah. Silakan coba lagi.\n");
         }
     }
 }
