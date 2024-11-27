@@ -1,12 +1,10 @@
 package models;
 
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -15,10 +13,11 @@ public class Admin extends Akun {
     private Akun akun;
     private List<Barang> listBarang = new ArrayList<>();
     private List<Transaksi> listTransaksi = new ArrayList<>();
+    
     public Admin(String id, String password) {
         super(id, password);
     }
-
+    
     public Akun getAkun() {
         return akun;
     }
@@ -44,8 +43,8 @@ public class Admin extends Akun {
         return listTransaksi;
     }
 
-        public List<Transaksi> getListTransaksi() {
-        return listTransaksi;
+    public List<Barang> getListBarang() {
+        return listBarang;
     }
 
      // Metode untuk menyimpan daftar barang ke file
@@ -142,6 +141,7 @@ public class Admin extends Akun {
         // Simpan transaksi yang belum diproses kembali ke file transaksi.txt
         simpanTransaksiKeFile(transaksiBaru);
     }
+    
     private void pindahkanKeFileDiproses(Transaksi transaksi) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("transaksi_diterima.txt", true))) {
             writer.write("Customer ID: " + transaksi.getCustomer().getId());
@@ -154,6 +154,23 @@ public class Admin extends Akun {
             writer.newLine();
         } catch (IOException e) {
             System.err.println("Kesalahan menulis ke file transaksi_diterima.txt: " + e.getMessage());
+        }
+    }
+
+    private void simpanTransaksiKeFile(List<Transaksi> transaksiBaru) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("transaksi.txt"))) {
+            for (Transaksi transaksi : transaksiBaru) {
+                writer.write(transaksi.getCustomer().getId());
+                writer.newLine();
+                for (Barang barang : transaksi.getBarang()) {
+                    writer.write(barang.getNama() + "," + barang.getHarga() + "," + barang.getStok());
+                    writer.newLine();
+                }
+                writer.write("---");
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println("Kesalahan saat memperbarui file transaksi.txt: " + e.getMessage());
         }
     }
 }
