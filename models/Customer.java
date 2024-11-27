@@ -102,6 +102,5 @@ public class Customer extends Akun {
     // Kosongkan keranjang belanja
     public void kosongkanKeranjang() {
         keranjang.kosongkanKeranjang();
-    }
-    
+    }   
 }
