@@ -39,4 +39,8 @@ public class Admin extends Akun {
             }
         }
     }
+    
+    public List<Transaksi> getListTransaksi() {
+        return listTransaksi;
+    }
 }
