@@ -24,5 +24,26 @@ public class Customer extends Akun {
     public Keranjang getKeranjang() {
         return keranjang;
     }
+    // Melakukan checkout
+    public void checkout(Admin admin, Pembayaran pembayaran) {
+        if (keranjang.getBarang().isEmpty()) {
+        System.out.println("\nKeranjang kosong. Tidak dapat melakukan checkout.");
+        return;
+        }
+
+        // Membuat transaksi
+        Transaksi transaksi = new Transaksi(this, keranjang.getBarang());
+    
+        // Simpan transaksi ke file `transaksi.txt`
+        simpanTransaksiKeFile(transaksi);
+    
+        // Membuat invoice dan menambahkannya ke riwayat
+        Invoice invoice = new Invoice(transaksi, pembayaran);
+        invoiceSelesai.add(invoice);
+    
+        // Mengosongkan keranjang
+        keranjang.kosongkanKeranjang();
+        System.out.println("\nCheckout berhasil.");
+    }
 
 }
