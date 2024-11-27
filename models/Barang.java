@@ -46,4 +46,18 @@ public class Customer extends Akun {
         System.out.println("\nCheckout berhasil.");
     }
 
+    private void simpanTransaksiKeFile(Transaksi transaksi) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("transaksi.txt", true))) {
+            writer.write(transaksi.getCustomer().getId()); // Menyimpan ID customer
+            writer.newLine();
+            for (Barang barang : transaksi.getBarang()) {
+                writer.write(barang.getNama() + "," + barang.getHarga() + "," + barang.getStok());
+                writer.newLine();
+            }
+            writer.write("------------------------------------------------"); // Penanda akhir transaksi
+            writer.newLine();
+        } catch (IOException e) {
+            System.out.println("Terjadi kesalahan saat menyimpan transaksi: " + e.getMessage());
+        }
+    }
 }
