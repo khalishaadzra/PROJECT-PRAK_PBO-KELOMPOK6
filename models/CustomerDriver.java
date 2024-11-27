@@ -149,6 +149,7 @@ public class CustomerDriver extends Driver {
             System.out.println("\nTerjadi kesalahan saat menyimpan ke file keranjang: " + e.getMessage());
         }
     }
+    
     public void lihatKeranjang() {
         File file = new File("keranjang.txt");
     
@@ -172,6 +173,7 @@ public class CustomerDriver extends Driver {
             System.out.println("Terjadi kesalahan saat membaca file keranjang.txt: " + e.getMessage());
         }
     }
+    
     public void checkout() {
         Admin adminMenu = new Admin("admin123", "password123");
         System.out.println("\nPilih Metode Pembayaran:");
@@ -218,4 +220,45 @@ public class CustomerDriver extends Driver {
         }
     }
 
+    public void lihatRiwayatBelanja() {
+        System.out.println("\n============== RIWAYAT BELANJA ==============\n");
+            
+        // Membaca barang yang belum diterima dari file transaksi.txt
+        File fileTransaksi = new File("transaksi.txt");
+        if (fileTransaksi.exists()) {
+            System.out.println("Barang Belum Diterima:");
+            try (BufferedReader reader = new BufferedReader(new FileReader(fileTransaksi))) {
+                String line;
+                String currentCustomer = "";
+                boolean isCustomer = false;
+                
+                while ((line = reader.readLine()) != null) {
+                    if (line.startsWith("cust")) { // ID customer
+                        currentCustomer = line;
+                        isCustomer = true;
+                        System.out.println("ID Customer: " + currentCustomer);
+                        System.out.println("Daftar Barang:");
+                    } else if (!line.equals("---")) { // Item details
+                        String[] parts = line.split(",");
+                        if (parts.length == 3) {
+                            String namaBarang = parts[0];
+                            double harga = Double.parseDouble(parts[1]);
+                            int jumlah = Integer.parseInt(parts[2]);
+                            System.out.printf("  - %s : %.1f (%d pcs)%n", namaBarang, harga, jumlah);
+                        }
+                    } else { // Separator for next customer
+                        if (isCustomer) {
+                            System.out.println(); // Add space between customer records
+                        }
+                        isCustomer = false;
+                    }
+                }
+            } catch (IOException e) {
+                System.out.println("Terjadi kesalahan saat membaca file transaksi.txt: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Tidak ada barang yang belum diterima.");
+        }
+            
+    }
 }
