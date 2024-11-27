@@ -25,5 +25,8 @@ public class Admin extends Akun {
     public void tambahBarang(Barang barang) {
         listBarang.add(barang);
     }
+    public void hapusBarang(String namaBarang) {
+        listBarang.removeIf(barang -> barang.getNama().equalsIgnoreCase(namaBarang));
+    }
 
 }
