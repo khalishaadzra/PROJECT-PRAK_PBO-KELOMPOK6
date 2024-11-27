@@ -2,3 +2,7 @@ package models;
 
 import java.util.ArrayList;
 import java.util.List;
+
+public class Keranjang {
+    private List<Barang> barang = new ArrayList<>();
+
