@@ -6,3 +6,7 @@ import java.util.List;
 public class Keranjang {
     private List<Barang> barang = new ArrayList<>();
 
+public void tambahBarang(Barang barang) {
+    this.barang.add(barang);
+}
+
