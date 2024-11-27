@@ -80,4 +80,6 @@ class COD extends Pembayaran {
     @Override
     public String getMetodePembayaran() {
         return "Cash on Delivery (COD)";  
+    }
+
 }
