@@ -89,5 +89,28 @@ public class Main {
             System.out.println("Gagal menyimpan data customer: " + e.getMessage());
         }
     }
+    public static void signUp() {
+        System.out.println("\n================== SIGN IN =================\n");
+        System.out.print("Pilih jenis akun (1: Admin, 2: Customer): ");
+        int jenisAkun = scanner.nextInt();
+        scanner.nextLine(); // Membersihkan buffer
+
+        System.out.print("Masukkan ID: ");
+        String id = scanner.nextLine();
+        System.out.print("Masukkan Password: ");
+        String password = scanner.nextLine();
+
+        if (jenisAkun == 1) {
+            adminList.add(new Admin(id, password));
+            saveData(); // Simpan perubahan
+            System.out.println("\nAkun Admin berhasil dibuat!");
+        } else if (jenisAkun == 2) {
+            customerList.add(new Customer(id, password));
+            saveData(); // Simpan perubahan
+            System.out.println("\nAkun Customer berhasil dibuat!");
+        } else {
+            System.out.println("\nPilihan tidak valid.");
+        }
+    }
 
 }
