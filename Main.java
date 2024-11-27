@@ -112,5 +112,24 @@ public class Main {
             System.out.println("\nPilihan tidak valid.");
         }
     }
+    public static void loginAdmin() {
+        System.out.println("\n================ LOGIN ADMIN ================\n");
+        System.out.print("Masukkan ID: ");
+        String id = scanner.nextLine();
+        System.out.print("Masukkan Password: ");
+        String password = scanner.nextLine();
 
+        Admin admin = adminList.stream()
+                .filter(a -> a.getId().equals(id) && a.getPassword().equals(password))
+                .findFirst()
+                .orElse(null);
+
+        if (admin != null) {
+            System.out.println("\nLogin berhasil sebagai Admin.\n");
+            AdminDriver adminMenu = new AdminDriver(admin, scanner);
+            adminMenu.menuAdmin();
+        } else {
+            System.out.println("\nID atau Password salah. Silakan coba lagi.\n");
+        }
+    }
 }
