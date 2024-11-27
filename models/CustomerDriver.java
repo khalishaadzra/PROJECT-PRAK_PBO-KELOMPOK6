@@ -57,7 +57,6 @@ public class CustomerDriver extends Driver {
             }
         } while (pilihan != 6);
     }
-
     
     public void lihatDaftarBarang() {
         File file = new File("barang.txt");
@@ -78,6 +77,40 @@ public class CustomerDriver extends Driver {
             }
         } catch (IOException e) {
             System.out.println("Terjadi kesalahan saat membaca file: " + e.getMessage());
+        }
+    }
+
+    public void tambahKeKeranjang() {
+        System.out.print("Masukkan Nama Barang: ");
+        String namaBarang = scanner.nextLine();
+        System.out.print("Jumlah Barang yang Ingin Dibeli: ");
+        int jumlahBarang = scanner.nextInt();
+        scanner.nextLine(); // Clear the newline
+    
+        File file = new File("barang.txt");
+    
+        if (!file.exists()) {
+            System.out.println("File barang.txt tidak ditemukan. Silakan hubungi admin.");
+            return;
+        }
+    
+        try {
+            List<Barang> barangList = new ArrayList<>();
+            boolean barangDitemukan = false;
+    
+            // Simpan kembali file barang dengan stok yang diperbarui
+            if (barangDitemukan) {
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                    for (Barang barang : barangList) {
+                        writer.write(barang.getNama() + "," + barang.getHarga() + "," + barang.getStok());
+                        writer.newLine();
+                    }
+                }
+            } else {
+                System.out.println("\nBarang tidak ditemukan dalam daftar.");
+            }
+        } catch (IOException e) {
+            System.out.println("\nTerjadi kesalahan saat membaca atau menulis file: " + e.getMessage());
         }
     }
 }
