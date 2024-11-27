@@ -10,6 +10,7 @@ public class Barang {
         this.harga = harga;
         this.stok = stok;
     }
+
     public String getNama() {
         return nama;
     }
@@ -17,6 +18,7 @@ public class Barang {
     public void setNama(String nama) {
         this.nama = nama; 
     }
+
     public double getHarga() {
         return harga;
     }
@@ -25,5 +27,11 @@ public class Barang {
         this.harga = harga; 
     }
 
-}
+    public int getStok() {
+        return stok;
+    }
 
+    public void setStok(int stok) {
+        this.stok = stok;
+    }
+}
