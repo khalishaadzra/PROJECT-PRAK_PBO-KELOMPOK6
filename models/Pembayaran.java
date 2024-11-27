@@ -10,5 +10,10 @@ abstract class Pembayaran {
     public String getId() {
         return id;
     }
+    
+    public abstract void prosesPembayaran();
+
+    // Tambahkan metode untuk mendapatkan nama metode pembayaran
+    public abstract String getMetodePembayaran();
 
 }
