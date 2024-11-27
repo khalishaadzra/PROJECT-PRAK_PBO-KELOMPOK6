@@ -152,4 +152,15 @@ public class AdminDriver extends Driver {
             System.err.println("Error menyimpan daftar barang ke file: " + e.getMessage());
         }
     }
+        public void tampilkanBarang() {
+        System.out.println("Daftar Barang:");
+        List<Barang> listBarang = bacaDariFile();
+        if (listBarang.isEmpty()) {
+            System.out.println("Tidak ada barang yang tersedia.");
+        } else {
+            for (Barang barang : listBarang) {
+                System.out.println("-> " + barang.getNama() + ": Rp " + barang.getHarga() + " (Stok: " + barang.getStok() + ")");
+            }
+        }
+    }
 }
