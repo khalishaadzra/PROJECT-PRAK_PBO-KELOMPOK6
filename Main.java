@@ -44,5 +44,29 @@ public class Main {
                 }
             } while (pilihan != 4);
         }
+    
+    private static void loadData() {
+        // Baca data admin dari file
+        try (BufferedReader reader = new BufferedReader(new FileReader(ADMIN_FILE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                adminList.add(new Admin(data[0], data[1]));
+            }
+        } catch (IOException e) {
+            System.out.println("Gagal membaca data admin: " + e.getMessage());
+        }
 
+        // Baca data customer dari file
+        try (BufferedReader reader = new BufferedReader(new FileReader(CUSTOMER_FILE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                customerList.add(new Customer(data[0], data[1]));
+            }
+        } catch (IOException e) {
+            System.out.println("Gagal membaca data customer: " + e.getMessage());
+        }
+    }
 
+}
