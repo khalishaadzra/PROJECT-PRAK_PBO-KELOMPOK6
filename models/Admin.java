@@ -43,4 +43,23 @@ public class Admin extends Akun {
     public List<Transaksi> getListTransaksi() {
         return listTransaksi;
     }
+
+        public List<Transaksi> getListTransaksi() {
+        return listTransaksi;
+    }
+
+     // Metode untuk menyimpan daftar barang ke file
+     public void simpanBarangKeFile(String namaFile) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(namaFile))) {
+            for (Barang barang : listBarang) {
+                writer.write(barang.getNama() + "," + barang.getHarga() + "," + barang.getStok());
+                writer.newLine();
+            }
+            System.out.println("Daftar barang berhasil disimpan ke file " + namaFile);
+        } catch (IOException e) {
+            System.out.println("Terjadi kesalahan saat menyimpan ke file: " + e.getMessage());
+        }
+    }
+}
+
 }
