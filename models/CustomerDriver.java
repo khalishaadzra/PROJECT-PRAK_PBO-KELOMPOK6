@@ -138,4 +138,16 @@ public class CustomerDriver extends Driver {
             System.out.println("\nTerjadi kesalahan saat membaca atau menulis file: " + e.getMessage());
         }
     }
+
+    private void simpanKeranjang(Barang barang) {
+        File file = new File("keranjang.txt");
+    
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+            writer.write(barang.getNama() + "," + barang.getHarga() + "," + barang.getStok());
+            writer.newLine();
+        } catch (IOException e) {
+            System.out.println("\nTerjadi kesalahan saat menyimpan ke file keranjang: " + e.getMessage());
+        }
+    }
+
 }
