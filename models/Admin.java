@@ -60,6 +60,6 @@ public class Admin extends Akun {
             System.out.println("Terjadi kesalahan saat menyimpan ke file: " + e.getMessage());
         }
     }
-}
+    
 
 }
