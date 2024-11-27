@@ -67,11 +67,6 @@ public class Customer extends Akun {
             System.out.println("Terjadi kesalahan saat menyimpan transaksi: " + e.getMessage());
         }
     }
-    
-    // Mendapatkan riwayat belanja yang telah selesai
-    public List<Invoice> getHistoryBelanja() {
-        return invoiceSelesai;
-    }
 
     // Menambah barang ke keranjang belanja
     public boolean tambahBarangKeKeranjang(String namaBarang, double harga, int jumlah) {
