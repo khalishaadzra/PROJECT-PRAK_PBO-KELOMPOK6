@@ -3,7 +3,6 @@ package models;
 import java.io.*;
 import java.util.*;
 
-
 // Menginisialisasi class CustomerDriver yang meng-extends class Driver
 public class CustomerDriver extends Driver {
     private Customer customer;
