@@ -259,6 +259,39 @@ public class CustomerDriver extends Driver {
         } else {
             System.out.println("Tidak ada barang yang belum diterima.");
         }
-            
+
+        // Membaca barang yang sudah diterima dari file transaksi_diterima.txt
+        System.out.println("\n============== RIWAYAT BELANJA ==============\n");
+        System.out.println("Barang Yang Diterima:");
+    
+        File fileDiproses = new File("transaksi_diterima.txt");
+        if (!fileDiproses.exists()) {
+            System.out.println("Tidak ada barang yang sudah diterima.");
+            return;
+        }
+    
+        // Map untuk menggabungkan barang berdasarkan Customer ID
+        Map<String, List<String>> transaksiMap = new LinkedHashMap<>();
+    
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileDiproses))) {
+            String line;
+            String currentCustomerID = null;
+    
+            while ((line = reader.readLine()) != null) {
+                if (!line.equals("---")) {
+                    if (currentCustomerID == null) {
+                        currentCustomerID = line; // Baris pertama dianggap sebagai Customer ID
+                        transaksiMap.putIfAbsent(currentCustomerID, new ArrayList<>());
+                    } else {
+                        transaksiMap.get(currentCustomerID).add(line); // Tambahkan barang ke Customer ID
+                    }
+                } else {
+                    currentCustomerID = null; // Reset setelah menemukan "---"
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Terjadi kesalahan saat membaca file transaksi_diproses.txt: " + e.getMessage());
+        }
+    
     }
 }
