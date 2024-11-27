@@ -16,4 +16,9 @@ public class Customer extends Akun {
         this.keranjang = new Keranjang();
         this.invoiceSelesai = new ArrayList<>();
     }
+
+    public Akun getAkun() {
+        return akun;
+    }
+
 }
