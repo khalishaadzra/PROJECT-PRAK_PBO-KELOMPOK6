@@ -10,3 +10,6 @@ public void tambahBarang(Barang barang) {
     this.barang.add(barang);
 }
 
+public void kosongkanKeranjang() {
+    barang.clear();
+}
