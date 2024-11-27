@@ -1,1 +1,25 @@
-
+macaron,15000.0,12
+cupcake,20000.0,15
+cheesecake,30000.0,10
+tiramisu,35000.0,8
+panna cotta,25000.0,10
+churros,20000.0,20
+gelato,25000.0,18
+croissant,15000.0,25
+eclair,20000.0,20
+fruit tart,30000.0,10
+mousse cake,35000.0,8
+soufflé,40000.0,5
+brownies,15000.0,20
+lemon tart,25000.0,15
+ice cream sandwich,20000.0,18
+crepe cake,35000.0,7
+pavlova,30000.0,10
+profiteroles,20000.0,12
+chocolate fondant,35000.0,8
+banana split,25000.0,15
+waffle,20000.0,10
+layered jelly,15000.0,25
+strawberry shortcake,30000.0,10
+matcha roll cake,25000.0,12
+donut,10000.0,18
