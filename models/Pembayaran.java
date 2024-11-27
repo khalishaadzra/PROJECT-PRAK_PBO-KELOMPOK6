@@ -33,3 +33,19 @@ class QRIS extends Pembayaran {
         return "QRIS";
     }
 }
+
+class Bank extends Pembayaran {
+    public Bank(String id) {
+        super(id);
+    }
+
+    @Override
+    public void prosesPembayaran() {
+        System.out.println("Pembayaran melalui Bank berhasil diproses.");
+    }
+
+    @Override
+    public String getMetodePembayaran() {
+        return "Bank Transfer";
+    }
+}
