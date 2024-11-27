@@ -70,4 +70,18 @@ public class AdminDriver extends Driver {
         scanner.nextLine(); // Membersihkan buffer
     
         // Menambahkan barang baru ke daftar
+        Barang barangBaru = new Barang(nama, harga, stok);
+        listBarang.add(barangBaru);
+    
+        // Simpan daftar barang kembali ke file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("barang.txt"))) {
+            for (Barang barang : listBarang) {
+                writer.write(barang.getNama() + "," + barang.getHarga() + "," + barang.getStok());
+                writer.newLine();
+            }
+            System.out.println("\nBarang berhasil ditambahkan.");
+        } catch (IOException e) {
+            System.err.println("\nError menyimpan daftar barang ke file: " + e.getMessage());
+        }
+    }
 }
