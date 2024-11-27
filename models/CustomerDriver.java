@@ -172,5 +172,50 @@ public class CustomerDriver extends Driver {
             System.out.println("Terjadi kesalahan saat membaca file keranjang.txt: " + e.getMessage());
         }
     }
+    public void checkout() {
+        Admin adminMenu = new Admin("admin123", "password123");
+        System.out.println("\nPilih Metode Pembayaran:");
+        System.out.println("1. QRIS");
+        System.out.println("2. Bank Transfer");
+        System.out.println("3. Cash On Delivery (COD)");
+        System.out.print("Masukkan pilihan Anda (1/2/3): ");
+        int pilihan = scanner.nextInt();
+        scanner.nextLine(); // Membersihkan buffer setelah input angka
     
+        Pembayaran pembayaran = null;
+    
+        switch (pilihan) {
+            case 1:
+                pembayaran = new QRIS("QRIS123");
+                break;
+            case 2:
+                pembayaran = new Bank("BANK123");
+                break;
+            case 3:
+                pembayaran = new COD("COD123");
+                break;
+            default:
+                System.out.println("Pilihan tidak valid. Pembayaran gagal.");
+                return;
+        }
+    
+        // Simpan transaksi dan proses pembayaran
+        customer.checkout(adminMenu, pembayaran);
+    
+        if (pembayaran != null) {
+            pembayaran.prosesPembayaran();
+        }
+    
+        // Hapus isi file keranjang.txt setelah checkout selesai
+        File file = new File("keranjang.txt");
+        if (file.exists()) {
+            if (file.delete()) {
+            } else {
+                System.out.println("Terjadi kesalahan saat mengosongkan keranjang.");
+            }
+        } else {
+            System.out.println("File keranjang.txt tidak ditemukan.");
+        }
+    }
+
 }
