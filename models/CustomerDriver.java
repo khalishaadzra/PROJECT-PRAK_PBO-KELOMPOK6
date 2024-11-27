@@ -28,7 +28,7 @@ public class CustomerDriver extends Driver {
             System.out.println("4. Checkout");
             System.out.println("5. Lihat Riwayat Belanja");
             System.out.println("6. Logout");
-            System.out.println("\n============================================\n");
+            System.out.println("\n=============================================\n");
             System.out.print("Pilih menu: ");
             pilihan = scanner.nextInt();
             scanner.nextLine(); // Membersihkan buffer
@@ -57,7 +57,7 @@ public class CustomerDriver extends Driver {
             }
         } while (pilihan != 6);
     }
-    
+
     public void lihatDaftarBarang() {
         File file = new File("barang.txt");
         if (!file.exists()) {
@@ -79,7 +79,6 @@ public class CustomerDriver extends Driver {
             System.out.println("Terjadi kesalahan saat membaca file: " + e.getMessage());
         }
     }
-
     public void tambahKeKeranjang() {
         System.out.print("Masukkan Nama Barang: ");
         String namaBarang = scanner.nextLine();
@@ -97,8 +96,8 @@ public class CustomerDriver extends Driver {
         try {
             List<Barang> barangList = new ArrayList<>();
             boolean barangDitemukan = false;
-
-                    // Membaca file barang dan memperbarui stok
+    
+            // Membaca file barang dan memperbarui stok
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
@@ -122,7 +121,7 @@ public class CustomerDriver extends Driver {
                     barangList.add(new Barang(nama, harga, stok)); // Simpan barang dengan stok yang diperbarui
                 }
             }
-            
+    
             // Simpan kembali file barang dengan stok yang diperbarui
             if (barangDitemukan) {
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
@@ -138,7 +137,7 @@ public class CustomerDriver extends Driver {
             System.out.println("\nTerjadi kesalahan saat membaca atau menulis file: " + e.getMessage());
         }
     }
-
+    
     private void simpanKeranjang(Barang barang) {
         File file = new File("keranjang.txt");
     
@@ -150,6 +149,7 @@ public class CustomerDriver extends Driver {
         }
     }
     
+
     public void lihatKeranjang() {
         File file = new File("keranjang.txt");
     
@@ -219,9 +219,10 @@ public class CustomerDriver extends Driver {
             System.out.println("File keranjang.txt tidak ditemukan.");
         }
     }
+    
 
     public void lihatRiwayatBelanja() {
-        System.out.println("\n============== RIWAYAT BELANJA ==============\n");
+            System.out.println("\n============== RIWAYAT BELANJA ==============\n");
             
         // Membaca barang yang belum diterima dari file transaksi.txt
         File fileTransaksi = new File("transaksi.txt");
@@ -259,39 +260,65 @@ public class CustomerDriver extends Driver {
         } else {
             System.out.println("Tidak ada barang yang belum diterima.");
         }
-
-        // Membaca barang yang sudah diterima dari file transaksi_diterima.txt
-        System.out.println("\n============== RIWAYAT BELANJA ==============\n");
-        System.out.println("Barang Yang Diterima:");
-    
-        File fileDiproses = new File("transaksi_diterima.txt");
-        if (!fileDiproses.exists()) {
-            System.out.println("Tidak ada barang yang sudah diterima.");
-            return;
-        }
-    
-        // Map untuk menggabungkan barang berdasarkan Customer ID
-        Map<String, List<String>> transaksiMap = new LinkedHashMap<>();
-    
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileDiproses))) {
-            String line;
-            String currentCustomerID = null;
-    
-            while ((line = reader.readLine()) != null) {
-                if (!line.equals("---")) {
-                    if (currentCustomerID == null) {
-                        currentCustomerID = line; // Baris pertama dianggap sebagai Customer ID
-                        transaksiMap.putIfAbsent(currentCustomerID, new ArrayList<>());
-                    } else {
-                        transaksiMap.get(currentCustomerID).add(line); // Tambahkan barang ke Customer ID
-                    }
-                } else {
-                    currentCustomerID = null; // Reset setelah menemukan "---"
-                }
+                
+            // Membaca barang yang sudah diterima dari file transaksi_diterima.txt
+            System.out.println("\n============== RIWAYAT BELANJA ==============\n");
+            System.out.println("Barang Yang Diterima:");
+        
+            File fileDiproses = new File("transaksi_diterima.txt");
+            if (!fileDiproses.exists()) {
+                System.out.println("Tidak ada barang yang sudah diterima.");
+                return;
             }
-        } catch (IOException e) {
-            System.out.println("Terjadi kesalahan saat membaca file transaksi_diproses.txt: " + e.getMessage());
-        }
-    
+        
+            // Map untuk menggabungkan barang berdasarkan Customer ID
+            Map<String, List<String>> transaksiMap = new LinkedHashMap<>();
+        
+            try (BufferedReader reader = new BufferedReader(new FileReader(fileDiproses))) {
+                String line;
+                String currentCustomerID = null;
+        
+                while ((line = reader.readLine()) != null) {
+                    if (!line.equals("---")) {
+                        if (currentCustomerID == null) {
+                            currentCustomerID = line; // Baris pertama dianggap sebagai Customer ID
+                            transaksiMap.putIfAbsent(currentCustomerID, new ArrayList<>());
+                        } else {
+                            transaksiMap.get(currentCustomerID).add(line); // Tambahkan barang ke Customer ID
+                        }
+                    } else {
+                        currentCustomerID = null; // Reset setelah menemukan "---"
+                    }
+                }
+            } catch (IOException e) {
+                System.out.println("Terjadi kesalahan saat membaca file transaksi_diproses.txt: " + e.getMessage());
+            }
+        
+            // Cetak invoice berdasarkan Customer ID
+            for (Map.Entry<String, List<String>> entry : transaksiMap.entrySet()) {
+                String customerID = entry.getKey();
+                List<String> daftarBarang = entry.getValue();
+        
+                System.out.println("\n============= INVOICE =============");
+                System.out.println("Customer ID : " + customerID);
+                System.out.println("Daftar Barang :");
+        
+                double totalHarga = 0.0;
+                for (String barang : daftarBarang) {
+                    String[] data = barang.split(",");
+                    String namaBarang = data[0];
+                    double harga = Double.parseDouble(data[1]);
+                    int jumlah = Integer.parseInt(data[2]);
+                    totalHarga += harga * jumlah;
+        
+                    System.out.printf("  %s: Rp %.2f x %d pcs%n", namaBarang, harga, jumlah);
+                }
+        
+                System.out.println("-----------------------------------");
+                System.out.printf("Total Harga : Rp %.2f%n", totalHarga);
+                System.out.println("Pembayaran berhasil diproses.");
+                System.out.println("==================================\n");
+            }
     }
+
 }
