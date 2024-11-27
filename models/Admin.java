@@ -21,12 +21,18 @@ public class Admin extends Akun {
     public Akun getAkun() {
         return akun;
     }
+
+    // Menambahkan barang ke dalam daftar barang
     public void tambahBarang(Barang barang) {
         listBarang.add(barang);
     }
+
+    // Menghapus barang dari daftar berdasarkan nama barang
     public void hapusBarang(String namaBarang) {
         listBarang.removeIf(barang -> barang.getNama().equalsIgnoreCase(namaBarang));
     }
+
+    // Mengedit detail barang berdasarkan nama barang lama
     public void editBarang(String namaBarang, String namaBaru, double hargaBaru, int stokBaru) {
         for (Barang barang : listBarang) {
             if (barang.getNama().equalsIgnoreCase(namaBarang)) {
@@ -47,8 +53,8 @@ public class Admin extends Akun {
         return listBarang;
     }
 
-     // Metode untuk menyimpan daftar barang ke file
-     public void simpanBarangKeFile(String namaFile) {
+    // Menyimpan daftar barang ke dalam file
+    public void simpanBarangKeFile(String namaFile) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(namaFile))) {
             for (Barang barang : listBarang) {
                 writer.write(barang.getNama() + "," + barang.getHarga() + "," + barang.getStok());
@@ -60,9 +66,9 @@ public class Admin extends Akun {
         }
     }   
 
+    // Memuat transaksi dari file "transaksi.txt" dan memproses transaksi berdasarkan input admin
     public void terimaTransaksiDariFile() {
-    // Memuat transaksi dari file
-    List<Transaksi> transaksiBaru = new ArrayList<>();
+        List<Transaksi> transaksiBaru = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader("transaksi.txt"))) {
             String line;
             String customerId = null;
@@ -105,20 +111,18 @@ public class Admin extends Akun {
             return;
         }
     
-        // Tampilkan daftar transaksi untuk admin memilih transaksi
-
+        // Menampilkan daftar transaksi yang tersedia
         System.out.println("\nDaftar Transaksi yang Tersedia:");
         int index = 1;
         for (Transaksi transaksi : transaksiBaru) {
             System.out.println(index + ". Customer ID: " + transaksi.getCustomer().getId());
-            // Menampilkan barang yang dibeli dan jumlahnya
             for (Barang barang : transaksi.getBarang()) {
                 System.out.println("   - " + barang.getNama() + ": " + barang.getStok() + " pcs");
             }
             index++;
         }
     
-        // Admin memilih transaksi untuk diproses
+        // Meminta admin memilih transaksi untuk diproses
         Scanner scanner = new Scanner(System.in);
         System.out.print("Pilih nomor transaksi untuk diproses: ");
         int pilihan = scanner.nextInt();
@@ -132,16 +136,17 @@ public class Admin extends Akun {
         Transaksi transaksiDipilih = transaksiBaru.get(pilihan - 1);
         System.out.println("\nMemproses transaksi untuk Customer: " + transaksiDipilih.getCustomer().getId());
     
-        // Pindahkan transaksi yang sudah diproses ke file transaksi_diterima.txt
+        // Memindahkan transaksi yang dipilih ke file transaksi_diterima.txt
         pindahkanKeFileDiproses(transaksiDipilih);
     
-        // Hapus transaksi yang sudah diproses dari listTransaksi yang baru
+        // Menghapus transaksi yang sudah diproses dari daftar transaksi baru
         transaksiBaru.remove(pilihan - 1);
     
-        // Simpan transaksi yang belum diproses kembali ke file transaksi.txt
+        // Menyimpan transaksi yang belum diproses kembali ke file transaksi.txt
         simpanTransaksiKeFile(transaksiBaru);
     }
     
+    // Memindahkan transaksi yang telah diproses ke file "transaksi_diterima.txt"
     private void pindahkanKeFileDiproses(Transaksi transaksi) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("transaksi_diterima.txt", true))) {
             writer.write("Customer ID: " + transaksi.getCustomer().getId());
@@ -157,6 +162,7 @@ public class Admin extends Akun {
         }
     }
 
+    // Menyimpan daftar transaksi yang belum diproses kembali ke file "transaksi.txt"
     private void simpanTransaksiKeFile(List<Transaksi> transaksiBaru) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("transaksi.txt"))) {
             for (Transaksi transaksi : transaksiBaru) {
