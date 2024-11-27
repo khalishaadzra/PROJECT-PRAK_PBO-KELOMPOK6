@@ -20,5 +20,9 @@ public class Customer extends Akun {
     public Akun getAkun() {
         return akun;
     }
+    // Mendapatkan keranjang customer
+    public Keranjang getKeranjang() {
+        return keranjang;
+    }
 
 }
