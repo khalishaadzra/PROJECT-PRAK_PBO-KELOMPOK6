@@ -149,5 +149,28 @@ public class CustomerDriver extends Driver {
             System.out.println("\nTerjadi kesalahan saat menyimpan ke file keranjang: " + e.getMessage());
         }
     }
-
+    public void lihatKeranjang() {
+        File file = new File("keranjang.txt");
+    
+        if (!file.exists()) {
+            System.out.println("\nKeranjang kosong.");
+            System.out.println("\nTidak ada barang di file keranjang.txt.");
+            return;
+        }
+    
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            System.out.println("\nIsi Keranjang:");
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                String nama = data[0];
+                double harga = Double.parseDouble(data[1]);
+                int jumlah = Integer.parseInt(data[2]);
+                System.out.println("- " + nama + ": Rp " + harga + " x " + jumlah + " pcs");
+            }
+        } catch (IOException e) {
+            System.out.println("Terjadi kesalahan saat membaca file keranjang.txt: " + e.getMessage());
+        }
+    }
+    
 }
