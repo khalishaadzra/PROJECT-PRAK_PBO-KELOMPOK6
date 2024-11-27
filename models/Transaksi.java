@@ -19,4 +19,15 @@ public class Transaksi {
     public List<Barang> getBarang() {
         return barang;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Customer ID: ").append(customer.getId()).append("\n");
+        sb.append("Barang yang dibeli:\n");
+        for (Barang b : barang) {
+            sb.append("- ").append(b.getNama()).append(": Rp ").append(b.getHarga()).append("\n");
+        }
+        return sb.toString();
+    }
 }
