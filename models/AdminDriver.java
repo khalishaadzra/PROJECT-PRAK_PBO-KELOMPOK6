@@ -141,4 +141,15 @@ public class AdminDriver extends Driver {
             System.out.println("\nBarang tidak ditemukan.");
         }
     }
+
+            private void simpanKeFile(List<Barang> listBarang) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("barang.txt"))) {
+            for (Barang barang : listBarang) {
+                writer.write(barang.getNama() + "," + barang.getHarga() + "," + barang.getStok());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println("Error menyimpan daftar barang ke file: " + e.getMessage());
+        }
+    }
 }
