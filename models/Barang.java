@@ -60,4 +60,10 @@ public class Customer extends Akun {
             System.out.println("Terjadi kesalahan saat menyimpan transaksi: " + e.getMessage());
         }
     }
+
+    // Mendapatkan riwayat belanja
+    public List<Invoice> getHistoryBelanja() {
+        return invoiceSelesai;
+    }
+
 }
