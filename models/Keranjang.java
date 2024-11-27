@@ -13,3 +13,8 @@ public void tambahBarang(Barang barang) {
 public void kosongkanKeranjang() {
     barang.clear();
 }
+
+public List<Barang> getBarang() {
+    return barang;
+    }
+}
