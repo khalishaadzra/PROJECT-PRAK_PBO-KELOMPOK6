@@ -11,4 +11,12 @@ public class Transaksi {
         this.customer = customer;
         this.barang = new ArrayList<>(barang); // Salin daftar barang untuk menjaga integritas data
     }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public List<Barang> getBarang() {
+        return barang;
+    }
 }
