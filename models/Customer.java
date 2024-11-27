@@ -75,7 +75,6 @@ public class Customer extends Akun {
         return true; // Menunjukkan barang berhasil ditambahkan
     }
 
-    
     // Melihat daftar barang dari file
     public List<Barang> lihatDaftarBarang(String namaFile) {
         List<Barang> daftarBarang = new ArrayList<>();
@@ -93,4 +92,10 @@ public class Customer extends Akun {
         }
         return daftarBarang;
     }
+
+    // Kosongkan keranjang
+    public void kosongkanKeranjang() {
+        keranjang.kosongkanKeranjang();
+    }
+    
 }
