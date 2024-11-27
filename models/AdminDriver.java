@@ -163,4 +163,15 @@ public class AdminDriver extends Driver {
             }
         }
     }
+            public void terimaTransaksi() {
+            System.out.println("\nDaftar Transaksi yang diterima:");
+            if (admin.getListTransaksi().isEmpty()) {
+                System.out.println("- Belum ada transaksi yang diterima.");
+                return;
+            }
+        
+            for (Transaksi transaksi : admin.getListTransaksi()) {
+                System.out.println(transaksi);
+            }
+        }
 }
