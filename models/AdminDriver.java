@@ -84,4 +84,28 @@ public class AdminDriver extends Driver {
             System.err.println("\nError menyimpan daftar barang ke file: " + e.getMessage());
         }
     }
+
+        public void hapusBarang() {
+        List<Barang> listBarang = bacaDariFile(); // Baca daftar barang dari file
+        System.out.print("Masukkan Nama Barang yang akan dihapus: ");
+        String nama = scanner.nextLine();
+    
+        boolean barangDihapus = false;
+        Iterator<Barang> iterator = listBarang.iterator();
+        while (iterator.hasNext()) {
+            Barang barang = iterator.next();
+            if (barang.getNama().equalsIgnoreCase(nama)) {
+                iterator.remove(); // Hapus barang dari daftar
+                barangDihapus = true;
+                break;
+            }
+        }
+    
+        if (barangDihapus) {
+            simpanKeFile(listBarang); // Simpan daftar barang yang diperbarui ke file
+            System.out.println("\nBarang berhasil dihapus.");
+        } else {
+            System.out.println("\nBarang tidak ditemukan.");
+        }
+    }
 }
