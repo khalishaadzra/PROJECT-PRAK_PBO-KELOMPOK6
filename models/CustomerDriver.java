@@ -58,4 +58,26 @@ public class CustomerDriver extends Driver {
         } while (pilihan != 6);
     }
 
+    
+    public void lihatDaftarBarang() {
+        File file = new File("barang.txt");
+        if (!file.exists()) {
+            System.out.println("File barang.txt tidak ditemukan. Silakan hubungi admin.");
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            System.out.println("Daftar Barang yang Tersedia:");
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                String nama = data[0];
+                double harga = Double.parseDouble(data[1]);
+                int stok = Integer.parseInt(data[2]);
+                System.out.println("- " + nama + ": Rp " + harga + " (Stok: " + stok + ")");
+            }
+        } catch (IOException e) {
+            System.out.println("Terjadi kesalahan saat membaca file: " + e.getMessage());
+        }
+    }
 }
