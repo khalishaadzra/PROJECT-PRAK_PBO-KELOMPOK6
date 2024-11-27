@@ -22,5 +22,8 @@ public class Admin extends Akun {
     public Akun getAkun() {
         return akun;
     }
+    public void tambahBarang(Barang barang) {
+        listBarang.add(barang);
+    }
 
 }
